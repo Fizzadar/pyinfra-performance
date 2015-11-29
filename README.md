@@ -5,8 +5,7 @@ This repo aims to compare the peformance of pyinfra against other deploy/automat
 + [pyinfra](https://github.com/Fizzadar/pyinfra) ([deploy.py](./deploy/deploy.py))
 + [Ansible](https://github.com/ansible/ansible) ([playbook.yaml](./playbook/playbook.yaml))
 
-The most recent results are always available in [the pyinfra documentation](https://pyinfra.readthedocs.org).
-
+The most recent results are always available in [latest_results.txt](./latest_results.txt).
 
 ## Run the tests
 
