@@ -1,0 +1,29 @@
+# pyinfra Performance
+# File: playbook/playbook.yml
+# Desc: the Ansible playbook
+
+- hosts: all
+  sudo: yes
+  gather_facts: no
+
+  tasks:
+  - name: Add pyinfra user
+    user: name=pyinfra home=/home/pyinfra shell=/bin/bash
+
+  - name: Add log file
+    file: path=/var/log/pyinfra.log state=file owner=pyinfra
+
+  - name: Restart cron service
+    service: name=cron state=restarted
+
+  - name: Copy a file
+    copy: src=../files/test_file.txt dest=/home/pyinfra/test_file.txt owner=pyinfra
+
+  - name: Generate & copy a template
+    template: >
+        src=../templates/test_template.jn2
+        dest=/home/pyinfra/test_template.txt
+        owner=pyinfra
+
+  - name: Run some shell
+    shell: echo "hi!"
