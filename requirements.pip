@@ -1,0 +1,3 @@
+pyinfra==0.1dev2
+ansible==1.9.4
+fabric==1.10.2
