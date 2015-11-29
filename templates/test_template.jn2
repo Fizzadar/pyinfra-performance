@@ -1,0 +1,1 @@
+SSH hostname: {% if host is defined %}{{ host.ssh_hostname }}{% elif inventory_hostname %}{{ inventory_hostname }}{% endif %}
