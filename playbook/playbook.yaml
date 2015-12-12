@@ -11,7 +11,7 @@
     user: name=pyinfra home=/home/pyinfra shell=/bin/bash
 
   - name: Add log file
-    file: path=/var/log/pyinfra.log state=file owner=pyinfra
+    file: path=/var/log/pyinfra.log state=touch owner=pyinfra
 
   - name: Restart cron service
     service: name=cron state=restarted

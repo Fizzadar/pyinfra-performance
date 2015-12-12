@@ -18,7 +18,7 @@ Vagrant.configure('2') do |config|
 
     # Give less rams
     config.vm.provider 'virtualbox' do |vb|
-        vb.memory = 128
+        vb.memory = 200
     end
 
     # Actually generate the VM's

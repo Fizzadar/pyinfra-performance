@@ -7,6 +7,7 @@ This repo aims to compare the peformance of pyinfra against other deploy/automat
 
 The most recent results are always available in [latest_results.txt](./latest_results.txt).
 
+
 ## Run the tests
 
 ```sh
@@ -22,7 +23,5 @@ PYINFRA_TEST_HOSTS=50 ./run_tests.sh
 
 For each deployment tool:
 
-+ Bring up a set of empty/clean hosts
-+ Run & time a clean deploy
-+ Restart the boxes
-+ Run & time a repeat deploy
++ Clear out any old test files/directories/users (see `deploy/cleanup.py`)
++ Run the test deploy twice
