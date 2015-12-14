@@ -91,3 +91,41 @@ sys 0m10.466s
 real    1m27.806s
 user    3m6.172s
 sys 0m6.244s
+
+
+
+### pyinfra Performance Tests
+--> Running with 50 hosts
+--> Bringing up VM's...
+
+--> Pre-test cleanup...
+--> Running tests: pyinfra -i deploy/inventory.py deploy/deploy.py
+
+--> First complete in 14.393754000 seconds
+--> Second complete in 11.465988000 seconds
+
+real    0m35.919s
+user    0m14.810s
+sys 0m1.236s
+
+--> Pre-test cleanup...
+--> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c ssh
+
+--> First complete in 28.466202000 seconds
+--> Second complete in 13.888249000 seconds
+
+real    0m52.397s
+user    0m25.112s
+sys 0m17.860s
+
+--> Pre-test cleanup...
+--> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c paramiko
+
+--> First complete in 81.422183000 seconds
+--> Second complete in 80.385777000 seconds
+
+real    2m51.854s
+user    6m0.404s
+sys 0m13.744s
+
+<-- All tests complete!
