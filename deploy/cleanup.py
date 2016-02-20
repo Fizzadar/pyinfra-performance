@@ -2,7 +2,7 @@
 # File: deploy/cleanup.py
 # Desc: reverts changes in deploy.py
 
-from pyinfra.modules import server, files
+from pyinfra.modules import server, files, init
 
 SUDO = True
 TIMEOUT = 1
@@ -18,3 +18,6 @@ for filename in (
     '/home/pyinfra/test_template.txt'
 ):
     files.file(filename, present=False)
+
+# Turn cron off
+init.upstart('cron', running=False)
