@@ -14,7 +14,7 @@
     file: path=/var/log/pyinfra.log state=touch owner=pyinfra
 
   - name: Restart cron service
-    service: name=cron state=restarted
+    service: name=cron state=running
 
   - name: Copy a file
     copy: src=../files/test_file.txt dest=/home/pyinfra/test_file.txt owner=pyinfra

@@ -10,8 +10,8 @@ normal=`tput sgr0`
 # Define our tests to time
 declare -a TESTS=(
     "pyinfra -i deploy/inventory.py deploy/deploy.py"
-    "ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c ssh"
-    "ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c paramiko"
+    "ansible-playbook -i playbook/inventory.py playbook/playbook.yml -c ssh"
+    "ansible-playbook -i playbook/inventory.py playbook/playbook.yml -c paramiko"
 )
 
 # Forces Ansible to accept all host keys
@@ -61,7 +61,6 @@ function run_tests() {
     declare -a test_names=( "First" "Second" )
     for test_name in "${test_names[@]}"; do
         run_test "${test_name}" "${@}"
-        sleep 5
 
         if [ ! "${?}" = "0" ]; then
             return 1
@@ -96,6 +95,10 @@ for TEST in "${TESTS[@]}"; do
     pyinfra -i deploy/inventory.py deploy/cleanup.py > /dev/null
 
     time run_tests "${TEST}"
+
+    echo
+    echo "--> Resting for 5s..."
+    sleep 5
 done
 
 
