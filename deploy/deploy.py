@@ -24,7 +24,7 @@ files.template(
 )
 
 # Restart cron service
-init.d('cron', restarted=True)
+init.upstart('cron', running=True)
 
 # Run some shell
 server.shell('echo "hi!"')
