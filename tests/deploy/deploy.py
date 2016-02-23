@@ -2,7 +2,7 @@
 # File: deploy/deploy.py
 # Desc: the pyinfra deploy!
 
-from pyinfra.modules import server, files, init
+from pyinfra.modules import server, files
 
 SUDO = True
 TIMEOUT = 1
@@ -22,9 +22,6 @@ files.template(
     '/home/pyinfra/test_template.txt',
     user='pyinfra'
 )
-
-# Restart cron service
-init.upstart('cron', running=True)
 
 # Run some shell
 server.shell('echo "hi!"')
