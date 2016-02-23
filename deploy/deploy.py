@@ -21,7 +21,7 @@ apt.packages(
 )
 
 # Install pyinfra/Ansible/Fabric
-pip.packages(['pyinfra==0.1.dev9', 'ansible', 'fabric'])
+pip.packages(['git+https://github.com/Fizzadar/pyinfra', 'ansible', 'fabric'])
 
 # Final prep
 server.shell(

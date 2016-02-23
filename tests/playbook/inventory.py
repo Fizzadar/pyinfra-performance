@@ -19,12 +19,14 @@ inventory = {
             for n in xrange(1, n_hosts)
         ],
         'vars': {
-            'ansible_ssh_user': 'vagrant',
-            'ansible_ssh_private_key_file': 'files/insecure_private_key'
-        },
+            'ansible_ssh_user': 'root',
+            'ansible_ssh_pass': 'root'
+        }
+    },
+    '_meta': {
         'hostvars': {
             'host_{0}'.format(n): {
-                'ansible_ssh_port': 900 + n,
+                'ansible_ssh_port': 9000 + n,
                 'ansible_ssh_host': 'localhost'
             }
             for n in xrange(1, n_hosts)

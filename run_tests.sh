@@ -95,17 +95,17 @@ for TEST in "${TESTS[@]}"; do
     kill_containers
 
     # Up new containers
+    echo "--> Spawning ${n_hosts} containers..."
     for i in `seq 1 ${n_hosts}`; do
-        echo "--> Bringing up new container #${i}"
-        docker run -d -p 900${i}:22 rastasheep/ubuntu-sshd > /dev/null
+        docker run -d -p $((9000 + i)):22 rastasheep/ubuntu-sshd > /dev/null
     done
+
+    echo "--> Resting for 5s..."
+    sleep 5
 
     # Do the tests!
     time run_tests "${TEST}"
-
-    # echo
-    # echo "--> Resting for 5s..."
-    # sleep 5
+    echo
 done
 
 
