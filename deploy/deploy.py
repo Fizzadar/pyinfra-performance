@@ -1,30 +1,33 @@
 # pyinfra Performance
 # File: deploy/deploy.py
-# Desc: the pyinfra deploy!
+# Desc: prepares the test VM by installing Docker
 
-from pyinfra.modules import server, files, init
+from pyinfra.modules import apt, server, pip
 
 SUDO = True
-TIMEOUT = 1
 
-# Add pyinfra user
-server.user('pyinfra', home='/home/pyinfra', shell='/bin/bash')
 
-# Add log file
-files.file('/var/log/pyinfra.log', user='pyinfra', mode=777)
-
-# Copy a file
-files.put('../files/test_file.txt', '/home/pyinfra/test_file.txt', user='pyinfra')
-
-# Generate & copy a template
-files.template(
-    '../templates/test_template.jn2',
-    '/home/pyinfra/test_template.txt',
-    user='pyinfra'
+# Add Docker key
+apt.key(
+    keyserver='hkp://p80.pool.sks-keyservers.net:80',
+    keyid='58118E89F3A912897C070ADBF76221572C52609D'
 )
 
-# Restart cron service
-init.upstart('cron', running=True)
+# Install Docker & pip
+apt.packages(
+    ['docker.io', 'python-pip', 'python-dev'],
+    update=True,
+    cache_time=3600
+)
 
-# Run some shell
-server.shell('echo "hi!"')
+# Install pyinfra/Ansible/Fabric
+pip.packages(['pyinfra==0.1.dev9', 'ansible', 'fabric'])
+
+# Final prep
+server.shell(
+    # Pull the rastasheep/ubuntu-sshd Docker image
+    'docker pull rastasheep/ubuntu-sshd',
+
+    # Lazy: jump to /opt/perf on login
+    'echo "cd /opt/performance && sudo su" >> /home/vagrant/.bash_profile'
+)

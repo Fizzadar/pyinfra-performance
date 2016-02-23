@@ -1,38 +1,25 @@
 # pyinfra Performance
 # File: Vagrantfile
-# Desc: dynamic Vagrant VM config
-
-
-# Figure out number of hosts from ENV, defaulting to 5
-hosts = ENV['PYINFRA_TEST_HOSTS'] || 5
-HOST_COUNT = hosts.to_i
+# Desc: the test VM (for non-native-Docker people)
 
 
 # Configure the VM's
 Vagrant.configure('2') do |config|
     config.vm.box = 'ubuntu/trusty64'
+    config.vm.synced_folder './', '/opt/performance'
 
     # Setup SSH key
     config.ssh.insert_key = false
-    config.ssh.private_key_path = 'files/insecure_private_key'
+    config.ssh.private_key_path = 'deploy/insecure_private_key'
 
-    # Give less rams
+    # Beef up the box
     config.vm.provider 'virtualbox' do |vb|
-        vb.memory = 200
+        vb.cpus = 4
+        vb.memory = 4096
     end
 
-    # Actually generate the VM's
-    HOST_COUNT.times do |i|
-        # Make VM's go from 1, 2, 3, ...
-        host_number = i + 1
-        host_id = "pyinfra-perf-#{host_number}"
-
-        # IP's start at 10, 11, 12, ...
-        network_number = i + 10
-
-        config.vm.define host_id do |host|
-            host.vm.network :private_network, ip: "192.168.13.#{network_number}"
-            host.vm.hostname = host_id
-        end
+    config.vm.define :pyinfra_performance do |host|
+        host.vm.network :private_network, ip: '192.168.13.13'
+        host.vm.hostname = 'pyinfra-perf-tests'
     end
 end

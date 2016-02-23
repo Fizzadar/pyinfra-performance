@@ -1,17 +1,19 @@
-#!/bin/sh
+#!/bin/bash
 
 # pyinfra Performance
 # File: run_tests.sh
 # Desc: let the performance tests begin!
+
+set -e
 
 bold=`tput bold`
 normal=`tput sgr0`
 
 # Define our tests to time
 declare -a TESTS=(
-    "pyinfra -i deploy/inventory.py deploy/deploy.py"
-    "ansible-playbook -i playbook/inventory.py playbook/playbook.yml -c ssh"
-    "ansible-playbook -i playbook/inventory.py playbook/playbook.yml -c paramiko"
+    "pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py"
+    "ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh"
+    "ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko"
 )
 
 # Forces Ansible to accept all host keys
@@ -22,6 +24,12 @@ VERBOSE="false"
 if [ "${1}" = "-v" ]; then
     VERBOSE="true"
 fi
+
+
+function kill_containers() {
+    # Ignore this (no containers)
+    docker kill `docker ps -q` > /dev/null || true
+}
 
 
 function run_test() {
@@ -79,26 +87,25 @@ if [ "${n_hosts}" = "" ]; then
 fi
 echo "--> Running with ${n_hosts} hosts"
 
-# Up the VM's
-if [ ! "${SKIP_VAGRANT}" = "true" ]; then
-    echo "--> Bringing up VM's..."
-    vagrant up > /dev/null
-else
-    echo "--> Skipping vagrant up"
-fi
 
 # Run each test
 for TEST in "${TESTS[@]}"; do
-    # This pyinfra deploy reverts any changes the test deploys make
-    echo
-    echo "--> Pre-test cleanup..."
-    pyinfra -i deploy/inventory.py deploy/cleanup.py > /dev/null
+    # Remove any existihg containers
+    echo "--> Removing any containers"
+    kill_containers
 
+    # Up new containers
+    for i in `seq 1 ${n_hosts}`; do
+        echo "--> Bringing up new container #${i}"
+        docker run -d -p 900${i}:22 rastasheep/ubuntu-sshd > /dev/null
+    done
+
+    # Do the tests!
     time run_tests "${TEST}"
 
-    echo
-    echo "--> Resting for 5s..."
-    sleep 5
+    # echo
+    # echo "--> Resting for 5s..."
+    # sleep 5
 done
 
 

@@ -10,9 +10,9 @@ n_hosts = int(n_hosts)
 
 
 HOSTS = ([
-    '192.168.13.{0}'.format(n)
+    ('localhost', {'ssh_port': 900 + n})
     for n in xrange(10, n_hosts + 10)
 ], {
-    'ssh_user': 'vagrant',
-    'ssh_key': 'files/insecure_private_key'
+    'ssh_user': 'root',
+    'ssh_password': 'root'
 })

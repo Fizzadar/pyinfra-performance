@@ -15,12 +15,19 @@ n_hosts = int(n_hosts)
 inventory = {
     'all': {
         'hosts': [
-            '192.168.13.{0}'.format(n)
-            for n in xrange(10, n_hosts + 10)
+            'host_{0}'.format(n)
+            for n in xrange(1, n_hosts)
         ],
         'vars': {
             'ansible_ssh_user': 'vagrant',
             'ansible_ssh_private_key_file': 'files/insecure_private_key'
+        },
+        'hostvars': {
+            'host_{0}'.format(n): {
+                'ansible_ssh_port': 900 + n,
+                'ansible_ssh_host': 'localhost'
+            }
+            for n in xrange(1, n_hosts)
         }
     }
 }
