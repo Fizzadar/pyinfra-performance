@@ -3,7 +3,7 @@
 # Desc: the Ansible playbook
 
 - hosts: all
-  sudo: yes
+  become: yes
   gather_facts: no
 
   tasks:
