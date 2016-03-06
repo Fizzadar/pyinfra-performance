@@ -2,7 +2,7 @@
 # File: deploy/deploy.py
 # Desc: prepares the test VM by installing Docker
 
-from pyinfra.modules import apt, server, pip
+from pyinfra.modules import apt, server, pip, init
 
 SUDO = True
 
@@ -13,9 +13,12 @@ apt.key(
     keyid='58118E89F3A912897C070ADBF76221572C52609D'
 )
 
+# Add docker repo
+apt.repo('deb https://apt.dockerproject.org/repo ubuntu-trusty main')
+
 # Install Docker & pip
 apt.packages(
-    ['docker.io', 'python-pip', 'python-dev'],
+    ['docker-engine', 'python-pip', 'python-dev', 'sshpass'],
     update=True,
     cache_time=3600
 )
@@ -23,11 +26,20 @@ apt.packages(
 # Install pyinfra/Ansible/Fabric
 pip.packages(['git+https://github.com/Fizzadar/pyinfra', 'ansible', 'fabric'])
 
-# Final prep
+# Prep Docker
 server.shell(
     # Pull the rastasheep/ubuntu-sshd Docker image
     'docker pull rastasheep/ubuntu-sshd',
 
+    # Lazy: add vagrant to Docker group to avoid sudo su'ing
+    'usermod -a -G docker vagrant',
+
     # Lazy: jump to /opt/perf on login
-    'echo "cd /opt/performance && sudo su" >> /home/vagrant/.bash_profile'
+    'echo "cd /opt/performance" > /home/vagrant/.bash_profile'
+)
+
+# Restart Docker
+init.upstart(
+    'docker',
+    restarted=True
 )
