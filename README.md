@@ -7,6 +7,7 @@ This repo aims to compare the peformance of pyinfra against other deploy/automat
 
 The most recent results are always available in [latest_results.txt](./latest_results.txt).
 
+
 ## Setup & Requirements
 
 The tests make use of Docker for quickly creating/destroying `n` servers. For those without Docker (myself included) there is a Vagrant VM provided:
@@ -15,6 +16,8 @@ The tests make use of Docker for quickly creating/destroying `n` servers. For th
 pyinfra -i 192.168.13.13 deploy/deploy.py \
     --user vagrant --key deploy/insecure_private_key
 ```
+
+Please note the VM's default specs are 4 CPUs & 4G ram. For tests >100 hosts I bump this up to 8CPU/8GB.
 
 
 ## Run the tests
