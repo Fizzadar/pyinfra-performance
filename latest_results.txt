@@ -1,131 +1,269 @@
+# pyinfra Performance Results
+# Date: 6th March 2016
+
+# pyinfra version: v0.1.dev10
+# Ansible version: 2.1
+
+
+
+vagrant@pyinfra-perf-tests:/opt/performance$ PYINFRA_TEST_HOSTS=5 ./run_tests.sh
 ### pyinfra Performance Tests
-### 5 hosts
+--> Running with 5 hosts
+--> Removing any containers
+--> Spawning 5 containers...
+--> Resting for 5s...
+--> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
 
---> Running tests: pyinfra -i deploy/inventory.py deploy/deploy.py
+--> First complete in 1.654032424 seconds
+--> Second complete in .903923313 seconds
 
---> First complete in 2.420728000 seconds
---> Second complete in 1.946565000 seconds
+real    0m2.564s
+user    0m0.493s
+sys 0m0.214s
 
-real    0m14.395s
-user    0m1.576s
-sys 0m0.178s
+--> Removing any containers
+--> Spawning 5 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh
 
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c ssh
+--> First complete in 2.015568222 seconds
+--> Second complete in 1.254801765 seconds
 
---> First complete in 2.945665000 seconds
---> Second complete in 1.654146000 seconds
+real    0m3.278s
+user    0m1.871s
+sys 0m2.668s
 
-real    0m14.626s
-user    0m3.000s
-sys 0m2.450s
+--> Removing any containers
+--> Spawning 5 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko
 
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c paramiko
+--> First complete in 3.721675592 seconds
+--> Second complete in 3.217463631 seconds
 
---> First complete in 7.942255000 seconds
---> Second complete in 8.053086000 seconds
+real    0m6.947s
+user    0m3.769s
+sys 0m4.113s
 
-real    0m26.023s
-user    0m37.009s
-sys 0m2.190s
-
-
-
-### pyinfra Performance Tests
-### 15 hosts
-
---> Running tests: pyinfra -i deploy/inventory.py deploy/deploy.py
-
---> First complete in 4.002151000 seconds
---> Second complete in 3.405913000 seconds
-
-real    0m17.440s
-user    0m4.374s
-sys 0m0.371s
-
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c ssh
-
---> First complete in 8.137818000 seconds
---> Second complete in 4.115502000 seconds
-
-real    0m22.282s
-user    0m7.293s
-sys 0m5.746s
-
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c paramiko
-
---> First complete in 22.373341000 seconds
---> Second complete in 22.933183000 seconds
-
-real    0m55.335s
-user    1m46.081s
-sys 0m3.922s
-
-
-
-### pyinfra Performance Tests
-### 25 hosts
-
---> Running tests: pyinfra -i deploy/inventory.py deploy/deploy.py
-
---> First complete in 6.508553000 seconds
---> Second complete in 5.720865000 seconds
-
-real    0m22.273s
-user    0m7.461s
-sys 0m0.584s
-
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c ssh
-
---> First complete in 14.714010000 seconds
---> Second complete in 7.110009000 seconds
-
-real    0m31.858s
-user    0m13.561s
-sys 0m10.466s
-
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c paramiko
-
---> First complete in 39.348739000 seconds
---> Second complete in 38.424486000 seconds
-
-real    1m27.806s
-user    3m6.172s
-sys 0m6.244s
-
-
-
-### pyinfra Performance Tests
---> Running with 50 hosts
---> Bringing up VM's...
-
---> Pre-test cleanup...
---> Running tests: pyinfra -i deploy/inventory.py deploy/deploy.py
-
---> First complete in 14.393754000 seconds
---> Second complete in 11.465988000 seconds
-
-real    0m35.919s
-user    0m14.810s
-sys 0m1.236s
-
---> Pre-test cleanup...
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c ssh
-
---> First complete in 28.466202000 seconds
---> Second complete in 13.888249000 seconds
-
-real    0m52.397s
-user    0m25.112s
-sys 0m17.860s
-
---> Pre-test cleanup...
---> Running tests: ansible-playbook -i playbook/inventory.py playbook/playbook.yaml -c paramiko
-
---> First complete in 81.422183000 seconds
---> Second complete in 80.385777000 seconds
-
-real    2m51.854s
-user    6m0.404s
-sys 0m13.744s
 
 <-- All tests complete!
+
+
+
+vagrant@pyinfra-perf-tests:/opt/performance$ PYINFRA_TEST_HOSTS=10 ./run_tests.sh
+### pyinfra Performance Tests
+--> Running with 10 hosts
+--> Removing any containers
+--> Spawning 10 containers...
+--> Resting for 5s...
+--> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
+
+--> First complete in 1.979076484 seconds
+--> Second complete in 1.068944839 seconds
+
+real    0m3.055s
+user    0m0.969s
+sys 0m0.263s
+
+--> Removing any containers
+--> Spawning 10 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh
+
+--> First complete in 4.347069985 seconds
+--> Second complete in 2.925277140 seconds
+
+real    0m7.279s
+user    0m4.298s
+sys 0m8.095s
+
+--> Removing any containers
+--> Spawning 10 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko
+
+--> First complete in 7.657454777 seconds
+--> Second complete in 6.705772392 seconds
+
+real    0m14.370s
+user    0m9.309s
+sys 0m12.897s
+
+
+<-- All tests complete!
+
+
+
+vagrant@pyinfra-perf-tests:/opt/performance$ PYINFRA_TEST_HOSTS=25 ./run_tests.sh
+### pyinfra Performance Tests
+--> Running with 25 hosts
+--> Removing any containers
+--> Spawning 25 containers...
+--> Resting for 5s...
+--> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
+
+--> First complete in 4.056870330 seconds
+--> Second complete in 1.739780331 seconds
+
+real    0m5.826s
+user    0m2.350s
+sys 0m1.198s
+
+--> Removing any containers
+--> Spawning 25 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh
+
+--> First complete in 13.995488838 seconds
+--> Second complete in 7.954871905 seconds
+
+real    0m21.958s
+user    0m11.422s
+sys 0m24.205s
+
+--> Removing any containers
+--> Spawning 25 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko
+
+--> First complete in 17.409813055 seconds
+--> Second complete in 14.446487122 seconds
+
+real    0m31.864s
+user    0m20.712s
+sys 0m26.419s
+
+
+<-- All tests complete!
+
+
+
+vagrant@pyinfra-perf-tests:/opt/performance$ PYINFRA_TEST_HOSTS=50 ./run_tests.sh
+### pyinfra Performance Tests
+--> Running with 50 hosts
+--> Removing any containers
+--> Spawning 50 containers...
+--> Resting for 5s...
+--> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
+
+--> First complete in 8.364125808 seconds
+--> Second complete in 5.036991163 seconds
+
+real    0m13.412s
+user    0m5.487s
+sys 0m3.531s
+
+--> Removing any containers
+--> Spawning 50 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh
+
+--> First complete in 29.092618702 seconds
+--> Second complete in 17.804247488 seconds
+
+real    0m46.905s
+user    0m25.389s
+sys 1m2.496s
+
+--> Removing any containers
+--> Spawning 50 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko
+
+--> First complete in 42.302565665 seconds
+--> Second complete in 38.529662848 seconds
+
+real    1m20.839s
+user    0m48.616s
+sys 1m27.449s
+
+
+<-- All tests complete!
+
+
+
+vagrant@pyinfra-perf-tests:/opt/performance$ PYINFRA_TEST_HOSTS=100 ./run_tests.sh
+### pyinfra Performance Tests
+--> Running with 100 hosts
+--> Removing any containers
+--> Spawning 100 containers...
+--> Resting for 5s...
+--> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
+
+--> First complete in 19.677200428 seconds
+--> Second complete in 9.506617115 seconds
+
+real    0m29.228s
+user    0m12.311s
+sys 0m8.802s
+
+--> Removing any containers
+--> Spawning 100 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh
+
+--> First complete in 83.822545112 seconds
+--> Second complete in 51.250403028 seconds
+
+real    2m15.082s
+user    1m0.341s
+sys 3m12.997s
+
+--> Removing any containers
+--> Spawning 100 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko
+
+--> First complete in 117.103858474 seconds
+--> Second complete in 82.158291537 seconds
+
+real    3m19.270s
+user    1m52.319s
+sys 3m49.959s
+
+
+<-- All tests complete!
+
+
+
+vagrant@pyinfra-perf-tests:/opt/performance$ PYINFRA_TEST_HOSTS=150 ./run_tests.sh
+### pyinfra Performance Tests
+--> Running with 150 hosts
+--> Removing any containers
+--> Spawning 150 containers...
+--> Resting for 5s...
+--> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
+
+--> First complete in 46.125616248 seconds
+--> Second complete in 23.621963417 seconds
+
+real    1m9.822s
+user    0m24.898s
+sys 0m26.178s
+
+--> Removing any containers
+--> Spawning 150 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh
+
+--> First complete in 169.817813632 seconds
+--> Second complete in 93.199233306 seconds
+
+real    4m23.026s
+user    1m47.185s
+sys 6m2.786s
+
+--> Removing any containers
+--> Spawning 150 containers...
+--> Resting for 5s...
+--> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko
+
+--> First complete in 227.312216822 seconds
+--> Second complete in 167.173673797 seconds
+
+real    6m34.496s
+user    3m26.781s
+sys 8m4.452s
+
+
+
