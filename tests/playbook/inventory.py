@@ -16,7 +16,7 @@ inventory = {
     'all': {
         'hosts': [
             'host_{0}'.format(n)
-            for n in xrange(1, n_hosts)
+            for n in xrange(0, n_hosts)
         ],
         'vars': {
             'ansible_ssh_user': 'root',
@@ -29,7 +29,7 @@ inventory = {
                 'ansible_ssh_port': 9000 + n,
                 'ansible_ssh_host': 'localhost'
             }
-            for n in xrange(1, n_hosts)
+            for n in xrange(0, n_hosts)
         }
     }
 }

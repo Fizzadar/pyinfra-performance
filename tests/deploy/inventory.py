@@ -11,7 +11,7 @@ n_hosts = int(n_hosts)
 
 HOSTS = ([
     ('host_{0}'.format(n), {'ssh_hostname': 'localhost', 'ssh_port': 9000 + n})
-    for n in xrange(1, n_hosts)
+    for n in xrange(0, n_hosts)
 ], {
     'ssh_user': 'root',
     'ssh_password': 'root'

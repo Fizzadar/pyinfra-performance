@@ -96,7 +96,7 @@ for TEST in "${TESTS[@]}"; do
 
     # Up new containers
     echo "--> Spawning ${n_hosts} containers..."
-    for i in `seq 1 ${n_hosts}`; do
+    for i in `seq 0 ${n_hosts}`; do
         docker run -d -p $((9000 + i)):22 rastasheep/ubuntu-sshd > /dev/null
     done
 
