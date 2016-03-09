@@ -6,6 +6,7 @@ from pyinfra.modules import server, files
 
 SUDO = True
 TIMEOUT = 1
+FAIL_PERCENT = 0
 
 # Add pyinfra user
 server.user('pyinfra', home='/home/pyinfra', shell='/bin/bash')
