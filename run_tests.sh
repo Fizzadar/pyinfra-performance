@@ -26,9 +26,31 @@ if [ "${1}" = "-v" ]; then
 fi
 
 
+function start_containers() {
+    echo -ne "    0/${1}\r"
+
+    local count=1
+
+    for i in `seq 1 ${1}`; do
+        docker run -d -p $((8999 + i)):22 rastasheep/ubuntu-sshd > /dev/null
+        echo -ne "    ${count}/${1}\r"
+        let count=count+1
+    done
+}
+
+
 function kill_containers() {
+    local n_containers=`docker ps -q | wc -l`
+    echo -ne "    0/${n_containers}\r"
+
+    local count=1
+
     # Ignore this (no containers)
-    docker kill `docker ps -q` > /dev/null || true
+    for container in `docker ps -q`; do
+        docker kill $container > /dev/null
+        echo -ne "    ${count}/${n_containers}\r"
+        let count=count+1
+    done
 }
 
 
@@ -91,23 +113,19 @@ echo "--> Running with ${n_hosts} hosts"
 # Run each test
 for TEST in "${TESTS[@]}"; do
     # Remove any existihg containers
-    echo "--> Removing any containers"
+    echo "--> Removing any containers..."
     kill_containers
 
     # Up new containers
     echo "--> Spawning ${n_hosts} containers..."
-    for i in `seq 0 ${n_hosts}`; do
-        docker run -d -p $((9000 + i)):22 rastasheep/ubuntu-sshd > /dev/null
-    done
-
-    echo "--> Resting for 5s..."
-    sleep 5
+    start_containers ${n_hosts}
 
     # Do the tests!
     time run_tests "${TEST}"
     echo
 done
 
+echo "--> Cleaning up remaining containers..."
+kill_containers
 
-echo
 echo "<-- All tests complete!"
