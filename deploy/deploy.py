@@ -26,13 +26,13 @@ apt.packages(
 # Install pyinfra/Ansible/Fabric
 pip.packages(['git+https://github.com/Fizzadar/pyinfra', 'ansible', 'fabric'])
 
+# Give Vagrant user access to Docker
+server.user('vagrant', groups=['docker'])
+
 # Prep Docker
 server.shell(
     # Pull the rastasheep/ubuntu-sshd Docker image
     'docker pull rastasheep/ubuntu-sshd',
-
-    # Lazy: add vagrant to Docker group to avoid sudo su'ing
-    'usermod -a -G docker vagrant',
 
     # Lazy: jump to /opt/perf on login
     'echo "cd /opt/performance" > /home/vagrant/.bash_profile'

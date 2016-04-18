@@ -13,8 +13,7 @@ The most recent results are always available in [latest_results.txt](./latest_re
 The tests make use of Docker for quickly creating/destroying `n` servers. For those without Docker (myself included) there is a Vagrant VM provided:
 
 ```
-pyinfra -i 192.168.13.13 deploy/deploy.py \
-    --user vagrant --key deploy/insecure_private_key
+pyinfra -i deploy/inventory.py deploy/deploy.py
 ```
 
 Please note the VM's default specs are 4 CPUs & 4G ram. For tests >100 hosts I bump this up to 8CPU/8GB.
@@ -23,6 +22,8 @@ Please note the VM's default specs are 4 CPUs & 4G ram. For tests >100 hosts I b
 ## Run the tests
 
 ```sh
+# If using the Vagrant VM: vagrant ssh
+
 # Run with 5 hosts
 ./run_tests.sh
 

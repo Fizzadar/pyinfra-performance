@@ -7,10 +7,7 @@
 Vagrant.configure('2') do |config|
     config.vm.box = 'ubuntu/trusty64'
     config.vm.synced_folder './', '/opt/performance'
-
-    # Setup SSH key
-    config.ssh.insert_key = false
-    config.ssh.private_key_path = 'deploy/insecure_private_key'
+    config.vm.synced_folder '.', '/vagrant', disabled: true
 
     # Beef up the box
     config.vm.provider 'virtualbox' do |vb|
