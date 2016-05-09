@@ -120,6 +120,8 @@ for TEST in "${TESTS[@]}"; do
     echo "--> Spawning ${n_hosts} containers..."
     start_containers ${n_hosts}
 
+    sleep 5
+
     # Do the tests!
     time run_tests "${TEST}"
     echo

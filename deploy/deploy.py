@@ -24,7 +24,7 @@ apt.packages(
 )
 
 # Install pyinfra/Ansible/Fabric
-pip.packages(['pyinfra==0.1.dev21', 'ansible', 'fabric'], latest=True)
+pip.packages(['pyinfra==0.1.dev22', 'ansible', 'fabric'], latest=True)
 
 # Give Vagrant user access to Docker
 server.user('vagrant', groups=['docker'])
