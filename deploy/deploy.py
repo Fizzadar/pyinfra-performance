@@ -18,13 +18,13 @@ apt.repo('deb https://apt.dockerproject.org/repo ubuntu-trusty main')
 
 # Install Docker & pip
 apt.packages(
-    ['docker-engine', 'python-pip', 'python-dev', 'sshpass'],
+    ['docker-engine', 'python-pip', 'python-dev', 'sshpass', 'libffi-dev', 'libssl-dev'],
     update=True,
     cache_time=3600
 )
 
 # Install pyinfra/Ansible/Fabric
-pip.packages(['git+https://github.com/Fizzadar/pyinfra', 'ansible', 'fabric'])
+pip.packages(['pyinfra==0.1.dev21', 'ansible', 'fabric'], latest=True)
 
 # Give Vagrant user access to Docker
 server.user('vagrant', groups=['docker'])
