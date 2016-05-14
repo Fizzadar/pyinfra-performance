@@ -277,6 +277,17 @@ vagrant@pyinfra-perf-tests:/opt/performance$ PYINFRA_TEST_HOSTS=500 ./run_tests.
 ### pyinfra Performance Tests
 --> Removing any containers...
 --> Spawning 500 containers...
+--> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
+
+--> First complete in 155.234235696 seconds
+--> Second complete in 73.463799608 seconds
+
+real    3m48.794s
+user    1m52.700s
+sys 0m47.429s
+
+--> Removing any containers...
+--> Spawning 500 containers...
 --> Running tests: ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh
 
 --> First complete in 557.965548029 seconds
@@ -296,14 +307,3 @@ sys 16m40.690s
 real    19m10.177s
 user    16m14.655s
 sys 21m58.983s
-
---> Removing any containers...
---> Spawning 500 containers...
---> Running tests: pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py
-
---> First complete in 155.234235696 seconds
---> Second complete in 73.463799608 seconds
-
-real    3m48.794s
-user    1m52.700s
-sys 0m47.429s
