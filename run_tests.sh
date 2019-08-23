@@ -55,7 +55,7 @@ function kill_containers() {
 function run_test() {
     START=`date +%s.%N`
 
-    # Are we printing output?
+    Are we printing output?
     if [ "${VERBOSE}" = "true" ]; then
         ${@:2}
     else
@@ -69,16 +69,19 @@ function run_test() {
         FAILED="false"
     fi
 
-    END=`date +%s.%N`
-    DIFF=`echo "$END - $START" | bc`
+    local END=`date +%s.%N`
+    local DIFF=`echo "$END - $START" | bc`
 
     if [ "${FAILED}" = "true" ]; then
         echo "--> ${1} failed after ${DIFF} seconds"
         return 1
     fi
 
-    echo "--> ${test_name} complete in ${DIFF} seconds"
-    echo "${@:2},${n_hosts},${test_name},${DIFF}" >> results.csv
+    local test_name=$1
+    local test_iteration=$2
+
+    echo "--> ${test_name} ${test_iteration} complete in ${DIFF} seconds"
+    echo "${test_name},${n_hosts},${test_iteration},${DIFF}" >> results.csv
     return
 }
 
@@ -87,9 +90,11 @@ function run_tests() {
     echo "--> Running ${bold}${1}${normal} tests"
     echo
 
+    local test_name
+
     declare -a test_names=( "First" "Second" )
     for test_name in "${test_names[@]}"; do
-        run_test "${test_name}" "${@:2}"
+        run_test "${1}" "${test_name}" "${@:2}"
 
         if [ ! "${?}" = "0" ]; then
             return 1
