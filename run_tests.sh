@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # pyinfra Performance
 # File: run_tests.sh
