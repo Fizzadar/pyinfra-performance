@@ -17,11 +17,5 @@
   - name: Copy a file
     copy: src=../files/test_file.txt dest=/home/pyinfra/test_file.txt owner=pyinfra
 
-  - name: Generate & copy a template
-    template: >
-        src=../templates/test_template.jn2
-        dest=/home/pyinfra/test_template.txt
-        owner=pyinfra
-
   - name: Run some shell
     shell: echo "hi!"
