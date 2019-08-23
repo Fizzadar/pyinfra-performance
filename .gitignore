@@ -3,3 +3,7 @@
 .vagrant
 .venv
 *.retry
+
+results.csv
+
+pyinfra-debug.log
