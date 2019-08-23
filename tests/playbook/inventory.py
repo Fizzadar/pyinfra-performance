@@ -20,18 +20,19 @@ inventory = {
         ],
         'vars': {
             'ansible_ssh_user': 'root',
-            'ansible_ssh_pass': 'root'
-        }
+            'ansible_ssh_private_key_file': 'docker/performance_rsa',
+            'ansible_python_interpreter': '/usr/bin/python3',
+        },
     },
     '_meta': {
         'hostvars': {
             'host_{0}'.format(n): {
                 'ansible_ssh_port': 9000 + n,
-                'ansible_ssh_host': 'localhost'
+                'ansible_ssh_host': 'localhost',
             }
             for n in range(0, n_hosts)
-        }
-    }
+        },
+    },
 }
 
 

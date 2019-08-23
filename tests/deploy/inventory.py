@@ -14,5 +14,5 @@ HOSTS = ([
     for n in range(0, n_hosts)
 ], {
     'ssh_user': 'root',
-    'ssh_password': 'root',
+    'ssh_key': '../../docker/performance_rsa',
 })
