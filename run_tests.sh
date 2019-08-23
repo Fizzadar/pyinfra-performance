@@ -10,10 +10,11 @@ bold=`tput bold`
 normal=`tput sgr0`
 
 # Define our tests to time
-declare -a TESTS=(
-    "pyinfra -i tests/deploy/inventory.py tests/deploy/deploy.py"
-    "ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh"
-    "ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko"
+declare -A TESTS=(
+    ["pyinfra"]="pyinfra tests/deploy/inventory.py tests/deploy/deploy.py"
+    ["ansible-ssh"]="ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh"
+    ["ansible-paramiko"]="ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko"
+    ["fabric"]="python tests/fabfile.py"
 )
 
 # Forces Ansible to accept all host keys
@@ -27,30 +28,27 @@ fi
 
 
 function start_containers() {
-    echo -ne "    0/${1}\r"
-
-    local count=1
+    echo "Starting ${1} containers"
 
     for i in `seq 1 ${1}`; do
-        docker run -d -p $((8999 + i)):22 rastasheep/ubuntu-sshd > /dev/null
-        echo -ne "    ${count}/${1}\r"
-        let count=count+1
+        docker run -d -p $((8999 + i)):22 pyinfra-performance-sshd >/dev/null &
+
+        if ! (( $i % 50 )); then
+            echo "${i}/${1}"
+            wait
+        fi
     done
+
+    wait
 }
 
 
 function kill_containers() {
-    local n_containers=`docker ps -q | wc -l`
-    echo -ne "    0/${n_containers}\r"
+    local containers=`docker ps -q`
 
-    local count=1
-
-    # Ignore this (no containers)
-    for container in `docker ps -q`; do
-        docker kill $container > /dev/null
-        echo -ne "    ${count}/${n_containers}\r"
-        let count=count+1
-    done
+    if [ ! "$containers" = "" ]; then
+        docker kill $containers > /dev/null
+    fi
 }
 
 
@@ -80,17 +78,18 @@ function run_test() {
     fi
 
     echo "--> ${test_name} complete in ${DIFF} seconds"
+    echo "${@:2},${n_hosts},${test_name},${DIFF}" >> results.csv
     return
 }
 
 
 function run_tests() {
-    echo "--> Running tests: ${bold}${@}${normal}"
+    echo "--> Running ${bold}${1}${normal} tests"
     echo
 
     declare -a test_names=( "First" "Second" )
     for test_name in "${test_names[@]}"; do
-        run_test "${test_name}" "${@}"
+        run_test "${test_name}" "${@:2}"
 
         if [ ! "${?}" = "0" ]; then
             return 1
@@ -109,9 +108,14 @@ if [ "${n_hosts}" = "" ]; then
 fi
 echo "--> Running with ${n_hosts} hosts"
 
+echo "--> ssh-add the key"
+ssh-add ./docker/performance_rsa > /dev/null 2>&1
+
+echo "--> Building docker SSH image..."
+docker build -t pyinfra-performance-sshd -f docker/Dockerfile ./docker > /dev/null
 
 # Run each test
-for TEST in "${TESTS[@]}"; do
+for TEST in "${!TESTS[@]}"; do
     # Remove any existihg containers
     echo "--> Removing any containers..."
     kill_containers
@@ -122,8 +126,8 @@ for TEST in "${TESTS[@]}"; do
 
     sleep 5
 
-    # Do the tests!
-    time run_tests "${TEST}"
+    # Do the tests
+    time run_tests ${TEST} ${TESTS[$TEST]}
     echo
 done
 
