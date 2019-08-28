@@ -55,11 +55,11 @@ function kill_containers() {
 function run_test() {
     START=`date +%s.%N`
 
-    Are we printing output?
+    # Are we printing output?
     if [ "${VERBOSE}" = "true" ]; then
-        ${@:2}
+        ${@:3}
     else
-        ${@:2} > /dev/null
+        ${@:3} > /dev/null
     fi
 
     # Flag whether failed or not
