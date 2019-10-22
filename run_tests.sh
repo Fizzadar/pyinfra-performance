@@ -57,9 +57,9 @@ function run_test() {
 
     # Are we printing output?
     if [ "${VERBOSE}" = "true" ]; then
-        ${@:3}
+        ${@:2}
     else
-        ${@:3} > /dev/null
+        ${@:2} > /dev/null
     fi
 
     # Flag whether failed or not
@@ -78,28 +78,10 @@ function run_test() {
     fi
 
     local test_name=$1
-    local test_iteration=$2
 
-    echo "--> ${test_name} ${test_iteration} complete in ${DIFF} seconds"
-    echo "${test_name},${n_hosts},${test_iteration},${DIFF}" >> results.csv
+    echo "--> ${test_name} complete in ${DIFF} seconds"
+    echo "${test_name},${n_hosts},${DIFF}" >> results.csv
     return
-}
-
-
-function run_tests() {
-    echo "--> Running ${bold}${1}${normal} tests"
-    echo
-
-    local test_name
-
-    declare -a test_names=( "First" "Second" )
-    for test_name in "${test_names[@]}"; do
-        run_test "${1}" "${test_name}" "${@:2}"
-
-        if [ ! "${?}" = "0" ]; then
-            return 1
-        fi
-    done
 }
 
 
@@ -132,7 +114,7 @@ for TEST in "${!TESTS[@]}"; do
     sleep 5
 
     # Do the tests
-    time run_tests ${TEST} ${TESTS[$TEST]}
+    time run_test ${TEST} ${TESTS[$TEST]}
     echo
 done
 

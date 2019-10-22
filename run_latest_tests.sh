@@ -3,7 +3,7 @@
 set -e
 
 echo "--> Reset results.csv"
-echo "test,hosts,pass,time" > results.csv
+echo "test,hosts,time" > results.csv
 
 PYINFRA_TEST_HOSTS=1 ./run_tests.sh
 PYINFRA_TEST_HOSTS=5 ./run_tests.sh
