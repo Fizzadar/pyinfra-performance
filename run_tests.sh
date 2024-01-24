@@ -11,10 +11,10 @@ normal=`tput sgr0`
 
 # Define our tests to time
 declare -A TESTS=(
-    ["pyinfra"]="pyinfra tests/deploy/inventory.py tests/deploy/deploy.py"
-    ["ansible-ssh"]="ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c ssh"
-    ["ansible-paramiko"]="ansible-playbook -i tests/playbook/inventory.py tests/playbook/playbook.yml -c paramiko"
-    ["fabric"]="python tests/fabfile.py"
+    ["pyinfra"]="pyinfra tests/pyinfra-deploy/inventory.py tests/pyinfra-deploy/deploy.py"
+    ["ansible-ssh"]="ansible-playbook -i tests/ansible-playbook/inventory.py tests/ansible-playbook/playbook.yml -c ssh"
+    ["ansible-paramiko"]="ansible-playbook -i tests/ansible-playbook/inventory.py tests/ansible-playbook/playbook.yml -c paramiko"
+    ["fabric"]="python tests/fabric/fabfile.py"
 )
 
 # Forces Ansible to accept all host keys
